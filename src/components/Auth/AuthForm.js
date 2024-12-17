@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 
 import classes from './AuthForm.module.css';
 
-const AuthForm = () => {
+const AuthForm = ({onsetUserdAuth}) => {
 
 
   const emailField = useRef();
@@ -31,7 +31,7 @@ const AuthForm = () => {
         }).then(resp =>{
           setIsLoading(false)
            if(resp.ok){
-             resp.json().then(resp => console.log(resp.idToken))
+             resp.json().then(resp => onsetUserdAuth(resp.idToken))
              setError(null)
            }else{
                 resp.json().then(resp =>{
