@@ -1,5 +1,5 @@
-import { Switch, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { Switch, Route,Redirect } from 'react-router-dom';
+import { useState,useEffect } from 'react';
 
 import Layout from './components/Layout/Layout';
 import UserProfile from './components/Profile/UserProfile';
@@ -12,11 +12,19 @@ function App() {
 
   function setUserdAuth(UID){
     setUserToken(UID)
+    localStorage.setItem('userAuth',JSON.stringify(UID))
   }
 
   function setUserAuthNull(){
     setUserToken(null)
+    localStorage.removeItem('userAuth')
   }
+
+  useEffect(()=>{
+
+    setUserToken(()=>JSON.parse(localStorage.getItem('userAuth')) || null);
+
+  },[])
 
   return (
     <Layout userToken={userToken} onSetUserAuthNull={setUserAuthNull}>
@@ -24,12 +32,18 @@ function App() {
         <Route path='/' exact>
           <HomePage />
         </Route>
-        <Route path='/auth'>
+        {!userToken &&   <Route path='/auth'>
           <AuthPage onsetUserdAuth={setUserdAuth}/>
-        </Route>
-        <Route path='/profile'>
+        </Route>}
+      
+        {userToken &&  <Route path='/profile'>
           <UserProfile userToken={userToken} />
+        </Route>}
+
+        <Route path="*">
+               <Redirect to="/"></Redirect>
         </Route>
+       
       </Switch>
     </Layout>
   );
