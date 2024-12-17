@@ -14,8 +14,12 @@ function App() {
     setUserToken(UID)
   }
 
+  function setUserAuthNull(){
+    setUserToken(null)
+  }
+
   return (
-    <Layout userToken={userToken}>
+    <Layout userToken={userToken} onSetUserAuthNull={setUserAuthNull}>
       <Switch>
         <Route path='/' exact>
           <HomePage />

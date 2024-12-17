@@ -1,8 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 
 import classes from './MainNavigation.module.css';
 
-const MainNavigation = ({userToken}) => {
+const MainNavigation = ({userToken,onSetUserAuthNull}) => {
+
+  const history = useHistory();
+
+
   console.log(userToken)
   return (
     <header className={classes.header}>
@@ -19,7 +23,11 @@ const MainNavigation = ({userToken}) => {
             <Link to='/profile'>Profile</Link>
           </li>
           <li>
-            <button>Logout</button>
+            <button type="button" onClick={()=>{
+              onSetUserAuthNull()
+              history.replace('/auth')
+            }
+              }>Logout</button>
           </li> </>}
          
         </ul>
