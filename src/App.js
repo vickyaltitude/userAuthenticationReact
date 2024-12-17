@@ -21,10 +21,20 @@ function App() {
   }
 
   useEffect(()=>{
+    
+    let setLogout;
 
     setUserToken(()=>JSON.parse(localStorage.getItem('userAuth')) || null);
+    
+         setLogout = setTimeout(()=>{
+      setUserToken(null)
+      localStorage.removeItem('userAuth')
+    },10000)
+    
 
-  },[])
+    return ()=> clearTimeout(setLogout)
+    
+  },[userToken])
 
   return (
     <Layout userToken={userToken} onSetUserAuthNull={setUserAuthNull}>
