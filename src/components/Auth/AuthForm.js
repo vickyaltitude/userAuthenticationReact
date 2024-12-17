@@ -1,10 +1,11 @@
 import { useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 import classes from './AuthForm.module.css';
 
 const AuthForm = ({onsetUserdAuth}) => {
-
-
+ 
+  const history = useHistory();
   const emailField = useRef();
   const passwordField = useRef();
   const [isLogin, setIsLogin] = useState(true);
@@ -33,6 +34,7 @@ const AuthForm = ({onsetUserdAuth}) => {
            if(resp.ok){
              resp.json().then(resp => onsetUserdAuth(resp.idToken))
              setError(null)
+             history.replace('/profile')
            }else{
                 resp.json().then(resp =>{
                   console.log(resp.error.message)

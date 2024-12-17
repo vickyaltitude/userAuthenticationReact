@@ -24,7 +24,7 @@ function App() {
           <AuthPage onsetUserdAuth={setUserdAuth}/>
         </Route>
         <Route path='/profile'>
-          <UserProfile />
+          <UserProfile userToken={userToken} />
         </Route>
       </Switch>
     </Layout>
